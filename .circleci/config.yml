@@ -17,7 +17,7 @@ jobs:
           git add .
           git commit -m "Updated image tag via CircleCI"
           # Push quietly to prevent showing the token in log
-          git push -q https://$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd.git main
+          git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd.git main
 
 
 
