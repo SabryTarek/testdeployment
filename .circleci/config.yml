@@ -25,8 +25,10 @@ jobs:
           echo $CIRCLE_SHA1  
           echo "export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\""
           export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
+          export GIT_COMMIT_MESSAGE2=\"$(git log --format=oneline -n 5 $CIRCLE_SHA1)\"
           echo $GIT_COMMIT_MESSAGE
           git commit -m $GIT_COMMIT_MESSAGE
+          git commit -m $GIT_COMMIT_MESSAGE2
           # Push quietly to prevent showing the token in log
           git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
 
