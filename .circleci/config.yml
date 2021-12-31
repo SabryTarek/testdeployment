@@ -23,6 +23,7 @@ jobs:
           git add .
           echo hello
           echo $CIRCLE_SHA1  
+          echo "export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\""
           git commit -m $CIRCLE_SHA1
           # Push quietly to prevent showing the token in log
           git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
