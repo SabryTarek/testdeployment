@@ -3,7 +3,7 @@ jobs:
     docker:
       - image: cimg/base:2020.06
     environment: 
-      GIT_COMMIT_DESC: $(git log --pretty=format:"%H %an %ad" -n 1 $CIRCLE_SHA1)
+      GIT_COMMIT_DESC: $(git log -n 1 $CIRCLE_SHA1)
     steps:
       - attach_workspace:
           at: /tmp/workspace
