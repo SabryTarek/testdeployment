@@ -6,12 +6,11 @@ jobs:
     docker:
       - image: prontotools/alpine-git-curl
     environment: 
-     GIT_COMMIT_MESSAGE3: \"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
+      GIT_COMMIT_MESSAGE3: $(git show -s --format="%s")
     steps:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      # - ecm: pay-justice/export-commit-message@0.0.1
       - run : |
           TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd /tmp/CircleCI-Webapp-CD
