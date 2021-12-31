@@ -2,6 +2,8 @@ jobs:
   GenerateYAML:
     docker:
       - image: cimg/base:2020.06
+    environment:
+      GIT_COMMIT_DESC: git log --format=oneline -n 1 $CIRCLE_SHA1
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -21,7 +23,7 @@ jobs:
           git add .
           echo hello
           echo $GIT_COMMIT_MSG
-          git commit -m ${GIT_COMMIT_MSG}
+          git commit -m $GIT_COMMIT_DESC
           # Push quietly to prevent showing the token in log
           #git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd.git main
 
