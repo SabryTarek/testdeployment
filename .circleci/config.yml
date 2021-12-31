@@ -2,8 +2,8 @@ jobs:
   GenerateYAML:
     docker:
       - image: cimg/base:2020.06
-    #environment: 
-    #  GIT_COMMIT_DESC: $(git log -n 1 $CIRCLE_SHA1)
+    environment: 
+     GIT_COMMIT_MESSAGE3: \"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -28,7 +28,7 @@ jobs:
           export GIT_COMMIT_MESSAGE2=\"$(git log --format=oneline -n 5 $CIRCLE_SHA1)\"
           echo $GIT_COMMIT_MESSAGE
           echo $GIT_COMMIT_MESSAGE2
-          git commit -m $GIT_COMMIT_MESSAGE2
+          git commit -m $GIT_COMMIT_MESSAGE3
           # Push quietly to prevent showing the token in log
           git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
 
