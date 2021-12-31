@@ -25,7 +25,7 @@ jobs:
           echo GIT_COMMIT_DESC   
           git commit -m GIT_COMMIT_DESC
           # Push quietly to prevent showing the token in log
-          git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git main
+          git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
 
 
 
