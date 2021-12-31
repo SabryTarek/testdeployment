@@ -4,14 +4,14 @@ orbs:
 jobs:
   GenerateYAML:
     docker:
-      - image: cimg/base:2020.06
+      - image: prontotools/alpine-git-curl
     environment: 
      GIT_COMMIT_MESSAGE3: \"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
     steps:
+      - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - ecm:
-          export_commit
+      - ecm/export_commit
       - run : |
           TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd /tmp/CircleCI-Webapp-CD
@@ -32,18 +32,6 @@ jobs:
           git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
 
 
-commands:
-  export_commit:
-    description: "Export GIT_COMMIT_MESSAGE environment variable"
-    parameters:
-      when:
-        type: string
-        default: "always"
-    steps:
-      - run:
-          when: << parameters.when >>
-          command: |
-            echo "export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"" >> $BASH_ENV
 
 workflows:
   version: 2
