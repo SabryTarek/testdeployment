@@ -1,3 +1,6 @@
+orbs:
+  ecm: pay-justice/export-commit-message@0.0.1
+  
 jobs:
   GenerateYAML:
     docker:
@@ -7,6 +10,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - ecm/export_commit
       - run : |
           TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd /tmp/CircleCI-Webapp-CD
@@ -22,17 +26,23 @@ jobs:
           git config user.name "leke-ariyo"
           git add .
           echo hello
-          echo $CIRCLE_SHA1  
-          echo "export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\""
-          export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"
-          export GIT_COMMIT_MESSAGE2=\"$(git log --format=oneline -n 5 $CIRCLE_SHA1)\"
-          echo $GIT_COMMIT_MESSAGE
-          echo $GIT_COMMIT_MESSAGE2
-          git commit -m $GIT_COMMIT_MESSAGE3
+          git commit -m '$GIT_COMMIT_MESSAGE'
           # Push quietly to prevent showing the token in log
           git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
 
 
+commands:
+  export_commit:
+    description: "Export GIT_COMMIT_MESSAGE environment variable"
+    parameters:
+      when:
+        type: string
+        default: "always"
+    steps:
+      - run:
+          when: << parameters.when >>
+          command: |
+            echo "export GIT_COMMIT_MESSAGE=\"$(git log --format=%B -n 1 $CIRCLE_SHA1)\"" >> $BASH_ENV
 
 workflows:
   version: 2
