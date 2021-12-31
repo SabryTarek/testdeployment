@@ -10,7 +10,8 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - ecm/export_commit
+      - ecm:
+          export_commit
       - run : |
           TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
           git clone https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd /tmp/CircleCI-Webapp-CD
