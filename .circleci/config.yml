@@ -10,7 +10,7 @@ jobs:
       - image: prontotools/alpine-git-curl
     steps:
       - checkout
-      - run: ls 
+      - run: echo $PATH
       - run:
           name: echo $(git show -s --format="%s")
           command:
