@@ -1,8 +1,6 @@
-version: 2.0
-description: Export git commit message as an environment variable for use in any job
-display:
-  source_url: https://github.com/pay-justice/export-commit-message
-
+version: 2.1
+orbs:
+  ecm: pay-justice/export-commit-message@0.0.1
 jobs:
   build:
     working_directory: ~/cms-api-server
@@ -10,10 +8,16 @@ jobs:
       - image: prontotools/alpine-git-curl
     steps:
       - checkout
-      - run: echo $PATH
+      - ecm/export_commit
       - run:
-          name: echo $(git show -s --format="%s")
-          command:
+          name: Send Slack Webhook
+          command: >
             curl google.com
+      - run:
+          name: $GIT_COMMIT_MESSAGE
+          command: >
+            curl google.com
+
+
 
 
