@@ -1,39 +1,19 @@
-orbs:
-  ecm: pay-justice/export-commit-message@0.0.1
-  
+version: 2.0
+description: Export git commit message as an environment variable for use in any job
+display:
+  source_url: https://github.com/pay-justice/export-commit-message
+
 jobs:
-  GenerateYAML:
+  build:
+    working_directory: ~/cms-api-server
     docker:
       - image: prontotools/alpine-git-curl
-    environment: 
-      GIT_COMMIT_MESSAGE3: $(git show -s --format="%s")
     steps:
       - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-      - run : |
-          TAG=0.1.$CIRCLE_PREVIOUS_BUILD_NUM
-          git clone https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/AnimaApp/anima-gke-argocd /tmp/CircleCI-Webapp-CD
-          cd /tmp/CircleCI-Webapp-CD
-          #cp /tmp/workspace/default/deployments.yaml .
-          #cp /tmp/CircleCI-Webapp-CD/default/deployments.yaml .
-          #sed -i 's/\(anima-api\)\(.*\)/\1:'$TAG'/' ./default/deployments.yaml
-          #sed -i 's/\(anima-api:\)\(.*\)/\1'$TAG'/' ./default/deployments.yaml
-          cp /tmp/CircleCI-Webapp-CD/anima-cluster/default/deployments.yaml .
-          sed -i 's/\(anima-api:\)\(.*\)/\1'$TAG'/' ./anima-cluster/default/deployments.yaml
-          git config credential.helper 'cache --timeout=120'
-          git config user.email "lekeariyo2015@gmail.com"
-          git config user.name "leke-ariyo"
-          git add .
-          echo hello
-          git commit -m '$GIT_COMMIT_MESSAGE'
-          # Push quietly to prevent showing the token in log
-          git push -q https://leke-ariyo:$GITHUB_PERSONAL_TOKEN@github.com/leke-ariyo/see.git --force main
+      - run: git show -s --format="%s
+      - run:
+          name: Send Slack Webhook
+          command:  |
+            curl google.com
 
 
-
-workflows:
-  version: 2
-  Test-Build-Publish:
-    jobs:
-      - GenerateYAML
