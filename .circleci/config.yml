@@ -10,7 +10,7 @@ jobs:
       - image: prontotools/alpine-git-curl
     steps:
       - checkout
-      - run: git show -s --format="%s"
+      - run: echo $(git show -s --format="%s")
       - run:
           name: Send Slack Webhook
           command:
