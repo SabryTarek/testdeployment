@@ -22,4 +22,4 @@ workflows:
     jobs:
       - build:
           commit-msg: GIT_COMMIT_MESSAGE
-          AppName-msg: tarek
+          AppName-msg: $GIT_COMMIT_MESSAGE
