@@ -1,23 +1,23 @@
 version: 2.1
-orbs:
-  ecm: pay-justice/export-commit-message@0.0.1
-jobs:
-  build:
-    working_directory: ~/cms-api-server
-    docker:
-      - image: prontotools/alpine-git-curl
+
+commands:
+  run-command:
+    parameters:
+      NUM:
+        type: string
     steps:
       - checkout
-      - ecm/export_commit
       - run:
-          name: Send Slack Webhook
-          command: >
-            curl google.com.eg
-      - run:
-          name: $(echo $GIT_COMMIT_MESSAGE)
-          command: >
-            curl google.com
+          command: |
+            echo "export MY_ENV=MY_<< parameters.NUM >>_ENV" >> $BASH_ENV
+            source $BASH_ENV 
+            echo $MY_ENV
 
-
-
-
+jobs:
+    build:
+        docker:
+            - image: circleci/node
+        steps:
+            - checkout
+            - run-command:
+                NUM: "15"
