@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  ecm: pay-justice/export-commit-message@0.0.1
 jobs:
    build:
      parameters:
@@ -11,11 +13,13 @@ jobs:
      docker:
        - image: ubuntu:latest
      steps:
+       - checkout
+       - ecm/export_commit
        - run: |
            echo "<< parameters.elkHost >>  << parameters.ebAppName >>"
 workflows:
   workflow:
     jobs:
       - build:
-          elkHost: sabry
+          elkHost: GIT_COMMIT_MESSAGE
           ebAppName: tarek
