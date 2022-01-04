@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   ecm: pay-justice/export-commit-message@0.0.1
 jobs:
-   build:
+   sa:
      parameters:
        commit-msg:
          type: env_var_name
@@ -20,6 +20,6 @@ jobs:
 workflows:
   workflow:
     jobs:
-      - build:
+      - sa:
           commit-msg: GIT_COMMIT_MESSAGE
           AppName-msg: tarek
