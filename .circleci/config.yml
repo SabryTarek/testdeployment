@@ -2,11 +2,11 @@ version: 2.1
 orbs:
   ecm: pay-justice/export-commit-message@0.0.1
 jobs:
-   sa:
+   build:
      parameters:
        commit-msg:
          type: env_var_name
-         default: GIT_COMMIT_MESSAGE # Note: replace with env var (without $) or remove it if the param is mandatory.
+         default: GIT_MSG # Note: replace with env var (without $) or remove it if the param is mandatory.
        AppName-msg:
          type: string
          default: 'my-app-name'
@@ -20,6 +20,6 @@ jobs:
 workflows:
   workflow:
     jobs:
-      - sa:
+      - build:
           commit-msg: GIT_COMMIT_MESSAGE
           AppName-msg: tarek
