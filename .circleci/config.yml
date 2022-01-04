@@ -16,7 +16,7 @@ jobs:
        - checkout
        - ecm/export_commit
        - run: |
-           echo "<< parameters.commit-msg >>  << parameters.AppName-msg >>"
+          << parameters.commit-msg >>  << parameters.AppName-msg >>
 workflows:
   workflow:
     jobs:
