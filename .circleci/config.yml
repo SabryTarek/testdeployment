@@ -18,5 +18,5 @@ workflows:
   workflow:
     jobs:
       - build:
-          elkHost: ELK_HOST
-          ebAppName: ${EB_APP_NAME}
+          elkHost: sabry
+          ebAppName: ${EB_APP_tarek}
