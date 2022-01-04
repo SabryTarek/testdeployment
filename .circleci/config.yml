@@ -4,10 +4,10 @@ orbs:
 jobs:
    build:
      parameters:
-       elkHost:
+       commit-msg:
          type: env_var_name
-         default: ELK_DEFAULT_HOST # Note: replace with env var (without $) or remove it if the param is mandatory.
-       ebAppName:
+         default: GIT_COMMIT_MESSAGE # Note: replace with env var (without $) or remove it if the param is mandatory.
+       AppName-msg:
          type: string
          default: 'my-app-name'
      docker:
@@ -16,10 +16,10 @@ jobs:
        - checkout
        - ecm/export_commit
        - run: |
-           echo "<< parameters.elkHost >>  << parameters.ebAppName >>"
+           echo "<< parameters.commit-msg >>  << parameters.AppName-msg >>"
 workflows:
   workflow:
     jobs:
       - build:
-          elkHost: GIT_COMMIT_MESSAGE
-          ebAppName: tarek
+          commit-msg: GIT_COMMIT_MESSAGE
+          AppName-msg: tarek
